@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      html {
+        font-family: sans-serif;
+      }
+      main {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      #reader {
+        width: 600px;
+      }
+      #result {
+        text-align: center;
+        font-size: 30px;
+      }
+
+      #reader-dashboard,
+      #reader__dashboard_section {
+        display: hidden;
+      }
+      .content {
+        display: hidden;
+        flex-direction: column;
+        align-items: center;
+      }
+    </style>
+
+    <script src="./node_modules/html5-qrcode/html5-qrcode.min.js"></script>
+    <script src="index.js"></script>
+  </head>
+  <body>
+    <main>
+      <div class="section">
+        <div class="container">
+          <div class="content">
+            <h1>Scan the QR CODE</h1>
+            <p>Thanks! here</p>
+            <div id="reader"></div>
+            <div id="result"></div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script>
+      const scanner = new Html5QrcodeScanner("reader", {
+        qrbox: {
+          width: 250,
+          height: 250,
+        },
+        fps: 20,
+      });
+
+      function onScanSuccess(qrCodeMessage) {
+        // handle on success condition with the decoded message
+        console.log(`QR matched = ${qrCodeMessage}`);
+        document.getElementById("reader").style.display = "none";
+        document.getElementById("result").innerHTML = qrCodeMessage;
+      }
+
+      function error(errorMessage) {
+        // handle on error condition, with error message
+        console.log(`Error = ${errorMessage}`);
+      }
+      // TODO : if client, then run this
+      scanner.render(onScanSuccess, error);
+    </script>
+  </body>
+</html>
